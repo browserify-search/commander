@@ -1,0 +1,16 @@
+{
+  "name": "commander",
+  "version": "0.0.0",
+  "description": "Command droplets on digitalocean.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Toby Ho",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^0.8.0",
+    "digitalocean": "^0.2.4",
+    "request": "^2.34.0"
+  }
+}

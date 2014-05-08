@@ -1,0 +1,38 @@
+#! /usr/bin/env node
+
+var request = require('superagent')
+var auth = require(__dirname + '/../auth.json')
+var async = require('async')
+
+request.get('https://api.digitalocean.com/droplets/')
+  .query(auth)
+  .end(function(reply){
+    var droplets = reply.body.droplets
+
+    var active = droplets.filter(function(d){
+      return d.status === 'active'
+    })
+
+    console.log(active.map(function(d){ return d.name }).join('\n'))
+    async.eachSeries(active, 
+      function(droplet, next){
+        var url = 
+          'https://api.digitalocean.com/droplets/' + 
+          droplet.id + 
+          '/power_off/'
+        console.log('Shutdown url', url)
+        request.get(url)
+          .query(auth)
+          .end(function(err, reply){
+            if (err) return next(err)
+            if (reply.error) return next(reply.error)
+            console.log('Shutdown', droplet.name, 'ok')
+            next()
+          })
+      },
+      function(err){
+        if (err) console.error(err.message)
+        else console.log('ok')
+      })
+    
+  })
