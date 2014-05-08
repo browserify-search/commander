@@ -13,14 +13,12 @@ request.get('https://api.digitalocean.com/droplets/')
       return d.status === 'active'
     })
 
-    console.log(active.map(function(d){ return d.name }).join('\n'))
     async.eachSeries(active, 
       function(droplet, next){
         var url = 
           'https://api.digitalocean.com/droplets/' + 
           droplet.id + 
           '/power_off/'
-        console.log('Shutdown url', url)
         request.get(url)
           .query(auth)
           .end(function(err, reply){
