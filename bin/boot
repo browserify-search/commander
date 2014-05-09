@@ -1,0 +1,21 @@
+#! /usr/bin/env node
+
+var cmdLn = require('cmd-ln')
+var request = require('../lib/request')
+var getDroplet = require('../lib/get_droplet')
+
+cmdLn(function(name){
+  getDroplet(name, function(err, droplet){
+    if (err) return console.error(err.message)
+      
+    var url = 'https://api.digitalocean.com/droplets/' +
+      droplet.id + '/power_on/'
+    
+    request(url)
+      .end(function(err, reply){
+        if (err) return console.error(err.message)
+        if (reply.error) return console.error(reply.error.message)
+        console.log('ok')
+      })
+  })
+})
