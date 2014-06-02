@@ -1,6 +1,0 @@
-#! /usr/bin/env node
-
-request.get('https://api.digitalocean.com/droplets/')
-  .query(auth)
-  .end(function(reply){
-    var droplets = reply.body.droplets

@@ -1,0 +1,21 @@
+#! /usr/bin/env node
+
+var cmdLn = require('cmd-ln')
+var request = require('../lib/request')
+
+cmdLn(function(name){
+  var url = 'https://api.digitalocean.com/v1/droplets/new'
+  request(url)
+    .query({
+      name: name,
+      size_slug: '1gb',
+      image_id: 3940172,
+      region_slug: 'nyc2',
+      ssh_key_ids: '152068'
+    })
+    .end(function(err, reply){
+      if (err) console.error(err.message)
+      console.log('ok')
+      console.log(reply.body)
+    })
+})

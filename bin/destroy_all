@@ -7,22 +7,19 @@ var allDroplets = require('../lib/all_droplets')
 
 allDroplets(function(err, droplets){
   if (err) return console.error(err.message)
-  var active = droplets.filter(function(d){
-    return d.status === 'active'
-  })
-
-  async.eachSeries(active, 
+  
+  async.eachSeries(droplets, 
     function(droplet, next){
       var url = 
         'https://api.digitalocean.com/droplets/' + 
         droplet.id + 
-        '/power_off/'
+        '/destroy/'
       request.get(url)
         .query(auth)
         .end(function(err, reply){
           if (err) return next(err)
           if (reply.error) return next(reply.error)
-          console.log('Shutdown', droplet.name, 'ok')
+          console.log('Destroy', droplet.name, 'ok')
           next()
         })
     },

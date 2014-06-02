@@ -20,7 +20,14 @@ cmdLn(function(command, _droplet){
     async.eachLimit(droplets, 10, function(droplet, next){
       var ip = droplet.ip_address
       var name = droplet.name
-      var p = spawn('ssh', ['airportyh@' + ip, command])
+      var p = spawn('ssh', 
+        [
+          '-o', 
+          'StrictHostKeyChecking no', 
+          'airportyh@' + ip, 
+          command
+        ]
+      )
       p.stdout.on('data', function(chunk){
         log.info(name, chunk + '')
       })

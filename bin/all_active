@@ -1,0 +1,16 @@
+#! /usr/bin/env node
+
+var api = require('../lib/api')
+
+api('droplets', function(err, reply){
+  var droplets = reply.droplets
+  var allActive = droplets.every(function(d){
+    return d.status === 'active'
+  })
+
+  if (allActive){
+    console.log('Yes')
+  }else{
+    console.log('No')
+  }
+})

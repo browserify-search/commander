@@ -1,0 +1,12 @@
+#! /usr/bin/env node
+
+var cmdLn = require('cmd-ln')
+var request = require('../lib/request')
+var api = require('../lib/api')
+
+cmdLn(function(apiName){
+  api(apiName, function(err, data){
+    if (err) console.error(err.message)
+    console.log(data)
+  })
+})
