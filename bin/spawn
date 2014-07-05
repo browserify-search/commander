@@ -2,20 +2,53 @@
 
 var cmdLn = require('cmd-ln')
 var request = require('../lib/request')
+var assert = require('assert')
+var async = require('async')
+var _ = require('lodash')
 
-cmdLn(function(name){
-  var url = 'https://api.digitalocean.com/v1/droplets/new'
-  request(url)
-    .query({
-      name: name,
-      size_slug: '1gb',
-      image_id: 3940172,
-      region_slug: 'nyc2',
-      ssh_key_ids: '152068'
-    })
-    .end(function(err, reply){
+cmdLn(function(number, _number2){
+  var arr = range(number, _number2)
+
+  async.eachLimit(
+    arr,
+    20,
+    function(n, next){
+      var url = 'https://api.digitalocean.com/v1/droplets/new'
+      var name = 'worker' + n
+      request(url)
+        .query({
+          name: name,
+          size_slug: '512mb',
+          image_id: 4583486,
+          region_slug: 'sfo1',
+          ssh_key_ids: '152068'
+        })
+        .end(function(err, reply){
+          if (err) return next(err)
+          if (reply.error) return next(reply.error)
+          next()
+        })
+    },
+    function(err){
       if (err) console.error(err.message)
-      console.log('ok')
-      console.log(reply.body)
-    })
+      else console.error('ok')
+    }
+  )
+
 })
+
+function range(num1, num2){
+  assert(num1)
+  if (num2){
+    num1 = Number(num1)
+    num2 = Number(num2)
+  }else{
+    num2 = Number(num1)
+    num1 = 0
+  }
+  var ret = []
+  for (var i = num1; i < num2; i++){
+    ret.push(i + 1)
+  }
+  return ret
+}

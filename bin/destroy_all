@@ -8,7 +8,12 @@ var allDroplets = require('../lib/all_droplets')
 allDroplets(function(err, droplets){
   if (err) return console.error(err.message)
   
-  async.eachSeries(droplets, 
+  var workers = droplets.filter(function(d){
+    return d.name.indexOf('worker') === 0
+  })
+
+  async.eachSeries(
+    workers, 
     function(droplet, next){
       var url = 
         'https://api.digitalocean.com/droplets/' + 

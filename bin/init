@@ -1,0 +1,5 @@
+#! /bin/bash
+
+rm -fr ~/.ssh/known_hosts
+bin/exec "cd ~/browserifiability; git pull; npm install > /dev/null 2>1"
+bin/exec "rm -fr /tmp/browserify-search"

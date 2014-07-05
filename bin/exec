@@ -11,13 +11,17 @@ cmdLn(function(command, _droplet){
   activeDroplets(function(err, droplets){
     if (err) return console.error(err.message)
 
+    workers = droplets.filter(function(d){
+      return d.name.indexOf('worker') === 0
+    })
+
     if (_droplet){
-      droplets = droplets.filter(function(d){
+      workers = workers.filter(function(d){
         return d.name === _droplet
       })
     }
 
-    async.eachLimit(droplets, 10, function(droplet, next){
+    async.eachLimit(workers, 10, function(droplet, next){
       var ip = droplet.ip_address
       var name = droplet.name
       var p = spawn('ssh', 

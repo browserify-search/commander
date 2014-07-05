@@ -1,0 +1,1 @@
+bin/exec "cd ~/browserifiability; DEBUG=test_module nohup bin/worker.js > worker.out 2> worker.err < /dev/null &"

@@ -12,6 +12,7 @@
     "async": "^0.8.0",
     "cmd-ln": "^0.1.0",
     "digitalocean": "^0.2.4",
+    "lodash": "^2.4.1",
     "npmlog": "0.0.6",
     "request": "^2.34.0"
   }
