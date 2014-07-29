@@ -7,6 +7,6 @@ var api = require('../lib/api')
 cmdLn(function(apiName){
   api(apiName, function(err, data){
     if (err) console.error(err.message)
-    console.log(data)
+    console.log(JSON.stringify(data, null, '  '))
   })
 })

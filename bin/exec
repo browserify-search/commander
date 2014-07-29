@@ -21,7 +21,7 @@ cmdLn(function(command, _droplet){
       })
     }
 
-    async.eachLimit(workers, 10, function(droplet, next){
+    async.eachLimit(workers, 250, function(droplet, next){
       var ip = droplet.ip_address
       var name = droplet.name
       var p = spawn('ssh', 

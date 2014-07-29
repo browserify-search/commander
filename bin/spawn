@@ -20,7 +20,7 @@ cmdLn(function(number, _number2){
           name: name,
           size_slug: '512mb',
           image_id: 4583486,
-          region_slug: 'sfo1',
+          region_slug: 'nyc2',
           ssh_key_ids: '152068'
         })
         .end(function(err, reply){
