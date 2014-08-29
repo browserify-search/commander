@@ -1,5 +1,5 @@
 #! /bin/bash
 
 rm -fr ~/.ssh/known_hosts
-bin/scp config.worker.json "~/browserifiability/config.json"
 bin/exec "cd ~/browserifiability; git pull; npm install > /dev/null 2>1"
+bin/scp config.worker.json "~/browserifiability/config.json"
