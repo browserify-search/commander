@@ -1,0 +1,27 @@
+#! /usr/bin/env node
+
+var exec = require('child_process').exec
+var cmdLn = require('cmd-ln')
+var activeDroplets = require('../lib/active_droplets')
+var async = require('async')
+var log = require('npmlog')
+
+cmdLn(function(src, dst){
+
+  activeDroplets(function(err, droplets){
+    if (err) return console.error(err.message)
+
+    async.eachLimit(droplets, 250, 
+      function(droplet, next){
+        exec('scp ' + src + ' "root@' + droplet.ip_address + ':' + dst + '"', function(err, stdout, stderr){
+          if (stderr) log.error(droplet.name, stderr)
+          next()
+        })
+      },
+      function(err){
+        if (err) console.error(err.message)
+        else console.log('done')
+      })
+
+  })
+})

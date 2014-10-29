@@ -1,0 +1,3 @@
+#! /bin/bash
+
+bin/scp config.worker.json "~/browserifiability/config.json"
