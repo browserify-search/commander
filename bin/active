@@ -4,9 +4,13 @@ var api = require('../lib/api')
 
 api('droplets', function(err, reply){
   var droplets = reply.droplets
-  var active = droplets.filter(function(d){
+  var workers = droplets.filter(
+    function(d){
+      return d.name.indexOf('worker') === 0
+    })
+  var activeWorkers = workers.filter(function(d){
     return d.status === 'active'
   })
 
-  console.log(active.length + ' out of ' + droplets.length + ' active')
+  console.log(activeWorkers.length + ' out of ' + workers.length + ' active')
 })
